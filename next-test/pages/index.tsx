@@ -1,56 +1,46 @@
-import type {NextPage} from 'next'
-import Image from 'next/image'
-import {dehydrate, QueryClient, useQuery } from 'react-query'
-import Link from 'next/link';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+import {User, UserTable} from "../components/UserTable";
+import {NextPageWithLayout} from "./_app";
+import Layout from "../components/Layout";
+import {ReactElement} from "react";
+import {faker} from "@faker-js/faker";
 
-type User = {
-    id: number,
-    firstName: string,
-    lastName: string,
-    phone: string,
-    dateOfBirth: string,
-    picture: string,
+const Page: NextPageWithLayout = () => {
+    return (<>
+        <CssBaseline />
+        <Container maxWidth="md">
+            <UserTable />
+        </Container>
+    </>)
 }
 
-type Data = {
-    users : User[]
-}
-
-const fetchAllUsers = async () => await (await fetch("http://localhost:3000/api/users")).json();
-
-const Home: NextPage = () => {
-    const {data, error, status} = useQuery<Data>('users', fetchAllUsers);
-
-    if (status == "loading") return <div>loading</div>
-
-    if (!data) return <div>No Data!</div>
-
+Page.getLayout = function getLayout(page: ReactElement) {
     return (
-        <>
-            {data?.users.map(user => (
-                <>
-                    <Link href={{ pathname: '/user', query: { user: JSON.stringify(user)}}}>
-                        <h2>{user.firstName}</h2>
-                    </Link>
-                    <Image src={user.picture} alt="user-image" width={500} height={500}/>
-                </>
+        <Layout>
+            {page}
+        </Layout>
 
-            ))}
-
-        </>
     )
 }
 
-export default Home
+export default Page
 
-export async function getStaticProps() {
-    const queryClient = new QueryClient();
-
-    await queryClient.prefetchQuery<Data>('users', fetchAllUsers)
-
-    return {
-        props: {
-            dehydratedState: dehydrate(queryClient)
-        }
+const generateUserData = (number: number) => {
+    const persons = [];
+    while (number >= 0) {
+        persons.push({
+            id: number,
+            firstName: faker.name.firstName(),
+            lastName: faker.name.lastName(),
+            address: faker.address.streetAddress(),
+            phone: faker.phone.number(),
+            dateOfBirth: faker.date.birthdate().toDateString(),
+            picture: faker.image.avatar(),
+        });
+        number--;
     }
-}
+    return persons;
+};
+
+export const userData: User[] = generateUserData(20);
