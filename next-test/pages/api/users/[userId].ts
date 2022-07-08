@@ -1,6 +1,7 @@
-import {userData} from "../../index";
+
 import {NextApiRequest, NextApiResponse} from "next";
 import {Data} from "../../../components/UserTable";
+import {userData} from "../../../utils/userData";
 
 export default function handler(
     req: NextApiRequest,

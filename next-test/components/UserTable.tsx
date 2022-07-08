@@ -1,4 +1,3 @@
-import {FC} from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -6,14 +5,10 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
-import Link from "next/link";
 import {dehydrate, QueryClient, useQuery} from "react-query";
 import Container from "@mui/material/Container";
-import Head from "next/head";
-import {makeStyles, Toolbar, Typography} from "@mui/material";
+import {Toolbar, Typography} from "@mui/material";
 import {useRouter} from "next/router";
-
-interface IProps {}
 
 export type User = {
     id: number,
@@ -31,7 +26,7 @@ export type Data = {
 
 const fetchAllUsers = async () => await (await fetch("http://localhost:3000/api/users")).json();
 
-export const UserTable: FC<IProps> = () => {
+export const UserTable = () => {
     const {data, error, status} = useQuery<Data>('users', fetchAllUsers);
     const router = useRouter();
 
@@ -51,20 +46,19 @@ export const UserTable: FC<IProps> = () => {
 
     if (!data) return <div>No Data!</div>
 
+    if (error) return <div>Error returning user information</div>
+
     return (
-        <Container>
-            <Toolbar><Typography
-                sx={{ flex: '1 1 100%' }}
-                variant="h6"
-                id="tableTitle"
-                component="div"
-            >
-                Users
-            </Typography></Toolbar>
-            <TableContainer sx={{flexGrow: 1, maxHeight: window.innerHeight*.6}} component={Paper}>
-                <Table sx={{minWidth: 650}} size="small" aria-label="simple table">
+        <Container id="table-container">
+            <Toolbar>
+                <Typography id="table-title" sx={{flex: '1 1 100%'}} variant="h6" component="div">
+                    Users
+                </Typography>
+            </Toolbar>
+            <TableContainer sx={{flexGrow: 1, maxHeight: window.innerHeight * .6}} component={Paper}>
+                <Table sx={{minWidth: 650}} size="small" aria-label="simple-table">
                     <TableHead>
-                        <TableRow  >
+                        <TableRow>
                             <TableCell sx={{fontWeight: 600}}>Name</TableCell>
                             <TableCell sx={{fontWeight: 600}} align="right">Address</TableCell>
                             <TableCell sx={{fontWeight: 600}} align="right">Phone number</TableCell>
@@ -73,12 +67,16 @@ export const UserTable: FC<IProps> = () => {
                     </TableHead>
                     <TableBody>
                         {data?.users.map((user) => (
-                                <TableRow key={user.id} onClick={() => handleClick(user)} sx={{":hover": {backgroundColor: "#EEE"}, '&:last-child td, &:last-child th': {border: 0}}}>
-                                    <TableCell sx={{flexGrow: 1}} component="th" scope="row">{user.firstName + " " + user.lastName}</TableCell>
-                                    <TableCell sx={{flexGrow: 1}} align="right">{user.address}</TableCell>
-                                    <TableCell sx={{flexGrow: 1}} align="right">{user.phone}</TableCell>
-                                    <TableCell sx={{flexGrow: 1}} align="right">{user.dateOfBirth}</TableCell>
-                                </TableRow>
+                            <TableRow key={user.id} onClick={() => handleClick(user)} sx={{
+                                ":hover": {backgroundColor: "#EEE"},
+                                '&:last-child td, &:last-child th': {border: 0}
+                            }}>
+                                <TableCell sx={{flexGrow: 1}} component="th"
+                                           scope="row">{user.firstName + " " + user.lastName}</TableCell>
+                                <TableCell sx={{flexGrow: 1}} align="right">{user.address}</TableCell>
+                                <TableCell sx={{flexGrow: 1}} align="right">{user.phone}</TableCell>
+                                <TableCell sx={{flexGrow: 1}} align="right">{user.dateOfBirth}</TableCell>
+                            </TableRow>
                         ))}
                     </TableBody>
                 </Table>

@@ -19,14 +19,14 @@ const Profile: NextPageWithLayout = () => {
     if (error) return <div>Error returning User information</div>
 
     return (
-        <Card sx={{flexGrow: 1, maxHeight: 450, maxWidth: 700}}>
+        <Card id='profile-card' sx={{flexGrow: 1, maxHeight: 450, maxWidth: 700}}>
             {
                 !user
                     ? <div>Error returning User information</div>
-                    : <CardActionArea>
+                    : <CardActionArea id='card-info'>
                         <Grid container spacing={2}>
                             <Grid item>
-                                <Image layout='intrinsic' src={`${user.picture}`} width={150} height={150}/>
+                                <Image id="profile-image" layout='intrinsic' src={`${user.picture}`} width={150} height={150}/>
                             </Grid>
                             <Grid item>
                                 <CardContent>

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {faker} from "@faker-js/faker";
-import {userData} from "../index";
+import {userData} from "../../utils/userData";
+
 
 type User = {
     id: number,
