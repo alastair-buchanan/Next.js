@@ -9,7 +9,7 @@ export type NextPageWithLayout = NextPage & {
 
 type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
-}
+    }
 
 function MyApp({Component, pageProps}: AppPropsWithLayout) {
     const [queryClient] = React.useState(() => new QueryClient());

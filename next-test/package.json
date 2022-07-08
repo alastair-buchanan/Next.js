@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "server": "json-server --watch db.json --port 3004"
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
