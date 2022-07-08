@@ -1,6 +1,6 @@
 import {NextPageWithLayout} from "./_app";
 import {useRouter} from "next/router";
-import {ReactElement, useState} from "react";
+import {ReactElement} from "react";
 import Layout from "../components/Layout";
 import {Card, CardActionArea, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 import Image from "next/image";
@@ -26,7 +26,8 @@ const Profile: NextPageWithLayout = () => {
                     : <CardActionArea id='card-info'>
                         <Grid container spacing={2}>
                             <Grid item>
-                                <Image id="profile-image" layout='intrinsic' src={`${user.picture}`} width={150} height={150}/>
+                                <Image id="profile-image" layout='intrinsic' src={`${user.picture}`} width={150}
+                                       height={150}/>
                             </Grid>
                             <Grid item>
                                 <CardContent>

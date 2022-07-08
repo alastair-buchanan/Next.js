@@ -1,6 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type {NextApiRequest, NextApiResponse} from 'next'
 import {userData} from "../../utils/userData";
-
 
 type User = {
     id: number,
@@ -13,7 +12,7 @@ type User = {
 }
 
 type Data = {
-    users : User[]
+    users: User[]
 }
 
 export default function handler(

@@ -9,13 +9,13 @@ export type NextPageWithLayout = NextPage & {
 
 type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
-    }
+}
 
 function MyApp({Component, pageProps}: AppPropsWithLayout) {
     const [queryClient] = React.useState(() => new QueryClient());
     const getLayout = Component.getLayout ?? ((page) => page)
 
-    return getLayout (
+    return getLayout(
         <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
                 <Component {...pageProps} />
